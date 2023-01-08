@@ -8,6 +8,12 @@
 # TODO make a front end so users can input and view things
 
 import yfinance as yf
+from website import create_app
+
+app= create_app()
+if __name__ =='__main__':
+  app.run(debug=True)
+
 
 
 # ticker_chosen = input("Type in the ticker for the graph of stock price you would like to view, eg (MSFT= Microsoft, AAPL= Apple, TSLA= Tesla)")
@@ -22,7 +28,7 @@ data_info = data.info
 data_news = data.news
 
 # print(data.info)
-print(data_history)
+# print(data_history)
 # print(data_calendar)
 # print(data_news)
 
