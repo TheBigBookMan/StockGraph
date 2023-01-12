@@ -8,11 +8,7 @@
 # TODO make a front end so users can input and view things
 
 import yfinance as yf
-from website import create_app
 
-app= create_app()
-if __name__ =='__main__':
-  app.run(debug=True)
 
 
 
@@ -31,4 +27,6 @@ data_news = data.news
 # print(data_history)
 # print(data_calendar)
 # print(data_news)
+
+### TODO import DJANGO
 
