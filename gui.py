@@ -4,13 +4,13 @@ title_info = sg.Text("Welcome to StockGraph! Input details below and then a grap
 
 #  ? Get the users input for ticker
 ticker = sg.Text("Ticker: ")
-ticker_input = sg.Input()
+ticker_input = sg.InputText(tooltip='Input ticker', key='ticker')
 
 # ? Get the users input for start and end dates in format
 start_date = sg.Text("Start date (YYYY-MM-DD): ")
-start_date_input = sg.Input()
+start_date_input = sg.InputText(tooltip='Start Date', key='start_date')
 end_date = sg.Text("End date (YYYY-MM-DD): ")
-end_date_input = sg.Input()
+end_date_input = sg.InputText(tooltip='End Date', key='end_date')
 
 # ? Button to link up to a function that gets todays date for the input
 end_date_today = sg.Button("Today's Date")
@@ -28,6 +28,6 @@ window = sg.Window('StockGraph', layout=[
 
 event, values = window.read()
 
-print(f"Ticker: {values[0]} Start-Date: {values[1]} End-Date: {values[2]}")
+print(f"Ticker: {values['ticker']} Start-Date: {values['start_date']} End-Date: {values['end_date']}")
 
 window.close()
