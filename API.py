@@ -5,7 +5,6 @@
 
 #?  use this library for the graphs - https://plotly.com/python/financial-charts/
 
-# TODO make a front end so users can input and view things
 #  TODO ust the PySimpleGUI library to make an easy GUI for users to input data liuke ticket etc and then use Pandas etc to show the graph
 
 import yfinance as yf
