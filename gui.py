@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 
-# TODO add in a history section for previous selected stock tickers--- can just be a random txt file
+# TODO add in a history section for previous selected stock tickers where adding in any searched tickers get added to the text file--- can just be a random txt file
 
 # TODO add in fcuntion to do todays date
 
@@ -26,10 +26,13 @@ monthly_period = sg.Radio("Monthly", "TIMEFRAME", default=False)
 yearly_period = sg.Radio("Yearly", "TIMEFRAME", default=False)
 
 # ? Button to link up to a function that gets todays date for the input
-end_date_today = sg.Button("Today's Date")
+end_date_today = sg.Button("Today's Date", key='today_date')
 
 # ? Search button will connect to the function other file and call the API
-submit_button = sg.Button("Search")
+submit_button = sg.Button("Search", key='search_button')
+
+# ? Exit program button
+exit_button = sg.Button("Exit", key='exit_program')
 
 # ? Getting the list of favourites from text file
 with open('tickers.txt', 'r') as file:
@@ -46,7 +49,7 @@ layout = [
     [end_date, end_date_input, end_date_today],
     [period_title],
     [daily_period, weekly_period, monthly_period, yearly_period],
-    [submit_button],
+    [submit_button, exit_button],
     [listbox]
     ],
 
@@ -57,12 +60,18 @@ while True:
 
     # TODO selection of favourite can then be used as ticker
 
-    # TODO add in conditional for which radio is selected and then that is assigned to the timeframe variable  
+    # TODO add in conditional for which radio is selected and then that is assigned to the timeframe variable  window['ticker'].update(value={return value from the function of selecting the historical one})-- this takes the value clicked in the history section and then adds it to the ticker input box ready to be used in search
 
     #  TODO add in conditionals so user fills in correct information into the inputs
-    print(f"Ticker: {values['ticker']} Start-Date: {values['start_date']} End-Date: {values['end_date']} Timeframe: {timeframe}")
+    # print(f"Ticker: {values['ticker']} Start-Date: {values['start_date']} End-Date: {values['end_date']} Timeframe: {timeframe}")
 
-    if event == sg.WIN_CLOSED:
+    if sg.WIN_CLOSED:
         break
+    elif event == 'exit_program':
+        break
+    elif event == "today_date":
+        # * Add function here for todays date from time module
+        # * window['end_date'].update(value={function return}) this is to get the return value from the current date function and then update the input box of the end_date period
+        print("TODAY")
 
 window.close()
