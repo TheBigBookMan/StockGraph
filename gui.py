@@ -1,10 +1,21 @@
 import PySimpleGUI as sg
+import os
 
 # TODO add in a history section for previous selected stock tickers where adding in any searched tickers get added to the text file--- can just be a random txt file
 
 # TODO add in fcuntion to do todays date
 
+# TODO create a theme-- google: PySimleGUI themes-- go on geeksforgeeks website
+
+# TODO maybe add images to the buttons to make it look a bit better, search maybe with a magnifying glass
+# todo might need to change mouseover_color for the button change colour and a tooltip for extra info
+
 # TODO link up with the functions from API call and then information is sent back
+
+# ? Might need to make a file for the tickers history-- for users who do not have the tickers.txt
+if not os.path.exists('tickers.txt'):
+    with open('tickers.txt', 'w') as file:
+        pass
 
 title_info = sg.Text("Welcome to StockGraph! Input details below and then a graph will be shown for the stock you are tracking.")
 
@@ -13,6 +24,9 @@ ticker = sg.Text("Ticker: ")
 ticker_input = sg.InputText(tooltip='Input ticker', key='ticker')
 
 # ? Get the users input for start and end dates in format
+# TODO
+# TODO think there is a calendar button instead of typing--- sg.CalendarButton
+# TODO
 start_date = sg.Text("Start date (YYYY-MM-DD): ")
 start_date_input = sg.InputText(tooltip='Start Date', key='start_date')
 end_date = sg.Text("End date (YYYY-MM-DD): ")
@@ -61,6 +75,9 @@ while True:
     # TODO selection of favourite can then be used as ticker
 
     # TODO add in conditional for which radio is selected and then that is assigned to the timeframe variable  window['ticker'].update(value={return value from the function of selecting the historical one})-- this takes the value clicked in the history section and then adds it to the ticker input box ready to be used in search
+
+    # todo sg.popup()--- use this for any errors eg- blank inputs, no api from wrong tiker etc
+    # todo use above with try except problems
 
     #  TODO add in conditionals so user fills in correct information into the inputs
     # print(f"Ticker: {values['ticker']} Start-Date: {values['start_date']} End-Date: {values['end_date']} Timeframe: {timeframe}")
