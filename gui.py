@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 import os
+import functions
 
 # TODO add in a history section for previous selected stock tickers where adding in any searched tickers get added to the text file--- can just be a random txt file
 
@@ -87,8 +88,7 @@ while True:
     elif event == 'exit_program':
         break
     elif event == "today_date":
-        # * Add function here for todays date from time module
-        # * window['end_date'].update(value={function return}) this is to get the return value from the current date function and then update the input box of the end_date period
-        print("TODAY")
+        window['end_date'].update(value=functions.get_current_time())
+        
 
 window.close()
