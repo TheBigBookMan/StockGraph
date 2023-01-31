@@ -38,8 +38,8 @@ end_date_today = sg.Button("Today's Date", key='today_date')
 period_title = sg.Text("Select timeframe: ")
 daily_period = sg.Radio("Daily", "TIMEFRAME", default=True, key="daily")
 weekly_period = sg.Radio("Weekly", "TIMEFRAME",  default=False, key="weekly")
-monthly_period = sg.Radio("Monthly", "TIMEFRAME", default=False)
-yearly_period = sg.Radio("Yearly", "TIMEFRAME", default=False)
+monthly_period = sg.Radio("Monthly", "TIMEFRAME", default=False, key="monthly")
+yearly_period = sg.Radio("Yearly", "TIMEFRAME", default=False, key="yearly")
 
 # ? Search button will connect to the function other file and call the API
 submit_button = sg.Button("Search", key='search_button')
@@ -73,13 +73,13 @@ while True:
 
     # TODO selection of favourite can then be used as ticker
 
-    # TODO add in conditional for which radio is selected and then that is assigned to the timeframe variable  window['ticker'].update(value={return value from the function of selecting the historical one})-- this takes the value clicked in the history section and then adds it to the ticker input box ready to be used in search
+    # todo window['ticker'].update(value={return value from the function of selecting the historical one})-- this takes the value clicked in the history section and then adds it to the ticker input box ready to be used in search
 
     # todo sg.popup()--- use this for any errors eg- blank inputs, no api from wrong tiker etc
     # todo use above with try except problems
 
     #  TODO add in conditionals so user fills in correct information into the inputs
-    # print(f"Ticker: {values['ticker']} Start-Date: {values['start_date']} End-Date: {values['end_date']} Timeframe: {timeframe}")
+    
 
     if sg.WIN_CLOSED:
         break
@@ -87,8 +87,18 @@ while True:
         break
     elif event == "today_date":
         window['end_date'].update(value=functions.get_current_time())
-    elif event == 'end_date_button':
-        print("heres date")
+    elif event == 'search_button':
+        if values['daily'] == True:
+            timeframe = 'daily'
+        if values['weekly'] == True:
+            timeframe = 'weekly'
+        if values['monthly'] == True:
+            timeframe = 'monthly'
+        if values['yearly'] == True:
+            timeframe = 'yearly'
+        # TODO maybe have a try except for the api call and the except can have red text show up
+
+        functions.api_call(values['ticker'], values['start_date'], values['end_date'], timeframe)
         
 
 window.close()
