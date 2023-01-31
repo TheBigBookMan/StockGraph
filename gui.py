@@ -25,13 +25,14 @@ ticker = sg.Text("Ticker: ")
 ticker_input = sg.InputText(tooltip='Input ticker', key='ticker')
 
 # ? Get the users input for start and end dates in format
-# TODO
-# TODO think there is a calendar button instead of typing--- sg.CalendarButton
-# TODO
 start_date = sg.Text("Start date (YYYY-MM-DD): ")
 start_date_input = sg.InputText(tooltip='Start Date', key='start_date')
+start_date_button = sg.CalendarButton("Start Date", key='start_date_button', format='%Y-%m-%d')
 end_date = sg.Text("End date (YYYY-MM-DD): ")
 end_date_input = sg.InputText(tooltip='End Date', key='end_date')
+end_date_button = sg.CalendarButton("End Date", key='end_date_button', format='%Y-%m-%d')
+# ? Button to link up to a function that gets todays date for the input
+end_date_today = sg.Button("Today's Date", key='today_date')
 
 # ? List of time periods
 period_title = sg.Text("Select timeframe: ")
@@ -39,9 +40,6 @@ daily_period = sg.Radio("Daily", "TIMEFRAME", default=True, key="daily")
 weekly_period = sg.Radio("Weekly", "TIMEFRAME",  default=False, key="weekly")
 monthly_period = sg.Radio("Monthly", "TIMEFRAME", default=False)
 yearly_period = sg.Radio("Yearly", "TIMEFRAME", default=False)
-
-# ? Button to link up to a function that gets todays date for the input
-end_date_today = sg.Button("Today's Date", key='today_date')
 
 # ? Search button will connect to the function other file and call the API
 submit_button = sg.Button("Search", key='search_button')
@@ -60,8 +58,8 @@ listbox = sg.Listbox(tickers, size=(10, 30))
 layout = [
     [title_info],
     [ticker, ticker_input],
-    [start_date, start_date_input],
-    [end_date, end_date_input, end_date_today],
+    [start_date, start_date_input, start_date_button],
+    [end_date, end_date_input, end_date_button, end_date_today],
     [period_title],
     [daily_period, weekly_period, monthly_period, yearly_period],
     [submit_button, exit_button],
@@ -89,6 +87,8 @@ while True:
         break
     elif event == "today_date":
         window['end_date'].update(value=functions.get_current_time())
+    elif event == 'end_date_button':
+        print("heres date")
         
 
 window.close()
