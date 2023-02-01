@@ -52,7 +52,7 @@ with open('tickers.txt', 'r') as file:
     tickers = file.readlines()
 
 # ? Listbox functon for the list of the ticker history from a txt file that has the ticker history stored
-listbox = sg.Listbox(tickers, size=(10, 30))
+listbox = sg.Listbox(tickers, size=(10, 30), key="list_box")
 
 # ? Creating the layout structure of the GUI
 layout = [
@@ -80,6 +80,7 @@ while True:
 
     #  TODO add in conditionals so user fills in correct information into the inputs
     
+    
 
     if sg.WIN_CLOSED:
         break
@@ -96,13 +97,17 @@ while True:
             timeframe = 'monthly'
         if values['yearly'] == True:
             timeframe = 'yearly'
+
         # TODO maybe have a try except for the api call and the except can have red text show up
 
-        tickers.append(values['ticker'])
-        with open('tickers.txt', 'w') as file:
-            file.writelines(tickers)
+        if values['list_box']:
+            ticker = str(values['list_box'][0].strip('\n'))
+        else:  
+            tickers.append(values['ticker'] + '\n')
+            with open('tickers.txt', 'w') as file:
+                file.writelines(tickers)
+            ticker = values['ticker']
 
-        functions.api_call(values['ticker'], values['start_date'], values['end_date'], timeframe)
-        
+        functions.api_call(ticker, values['start_date'], values['end_date'], timeframe)
 
 window.close()
