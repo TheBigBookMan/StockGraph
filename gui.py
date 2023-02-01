@@ -98,6 +98,10 @@ while True:
             timeframe = 'yearly'
         # TODO maybe have a try except for the api call and the except can have red text show up
 
+        tickers.append(values['ticker'])
+        with open('tickers.txt', 'w') as file:
+            file.writelines(tickers)
+
         functions.api_call(values['ticker'], values['start_date'], values['end_date'], timeframe)
         
 
