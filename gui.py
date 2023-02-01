@@ -13,6 +13,8 @@ import functions
 
 # TODO link up with the functions from API call and then information is sent back
 
+sg.theme("LightBlue2")
+
 # ? Might need to make a file for the tickers history-- for users who do not have the tickers.txt
 if not os.path.exists('tickers.txt'):
     with open('tickers.txt', 'w') as file:
@@ -47,6 +49,9 @@ submit_button = sg.Button("Search", key='search_button')
 # ? Exit program button
 exit_button = sg.Button("Exit", key='exit_program')
 
+# ? Display what user chose
+user_selection = sg.Text("", key="user_selection", text_color="Blue")
+
 # ? Getting the list of favourites from text file
 with open('tickers.txt', 'r') as file:
     tickers = file.readlines()
@@ -62,7 +67,7 @@ layout = [
     [end_date, end_date_input, end_date_button, end_date_today],
     [period_title],
     [daily_period, weekly_period, monthly_period, yearly_period],
-    [submit_button, exit_button],
+    [submit_button, exit_button, user_selection],
     [listbox]
     ],
 
@@ -106,8 +111,9 @@ while True:
             tickers.append(values['ticker'] + '\n')
             with open('tickers.txt', 'w') as file:
                 file.writelines(tickers)
-            ticker = values['ticker']
-
+                ticker = values['ticker']
+        
         functions.api_call(ticker, values['start_date'], values['end_date'], timeframe)
+        window['user_selection'].update(f"Ticker: {ticker} Date-Range: {values['start_date']} / {values['end_date']} Timeframe: {timeframe}")
 
 window.close()
