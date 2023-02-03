@@ -30,6 +30,8 @@ ticker_input = sg.InputText(tooltip='Input ticker', key='ticker')
 start_date = sg.Text("Start date (YYYY-MM-DD): ")
 start_date_input = sg.InputText(tooltip='Start Date', key='start_date')
 start_date_button = sg.CalendarButton("Start Date", key='start_date_button', format='%Y-%m-%d')
+# ? Button to get the max historical date
+max_historical_date = sg.Button("Max Date", key="max_date")
 end_date = sg.Text("End date (YYYY-MM-DD): ")
 end_date_input = sg.InputText(tooltip='End Date', key='end_date')
 end_date_button = sg.CalendarButton("End Date", key='end_date_button', format='%Y-%m-%d')
@@ -63,7 +65,7 @@ listbox = sg.Listbox(tickers, size=(10, 30), key="list_box")
 layout = [
     [title_info],
     [ticker, ticker_input],
-    [start_date, start_date_input, start_date_button],
+    [start_date, start_date_input, start_date_button, max_historical_date],
     [end_date, end_date_input, end_date_button, end_date_today],
     [period_title],
     [daily_period, weekly_period, monthly_period, yearly_period],
@@ -93,6 +95,9 @@ while True:
         break
     elif event == "today_date":
         window['end_date'].update(value=functions.get_current_time())
+    elif event == "max_date":
+        window['start_date'].update(value="max")
+        window['end_date'].update(value="max")
     elif event == 'search_button':
         if values['daily'] == True:
             timeframe = 'daily'
