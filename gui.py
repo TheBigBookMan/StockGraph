@@ -113,10 +113,7 @@ while True:
         if values['list_box']:
             ticker = str(values['list_box'][0].strip('\n'))
         else:  
-            tickers.append(values['ticker'] + '\n')
-            with open('tickers.txt', 'w') as file:
-                file.writelines(tickers)
-                ticker = values['ticker']
+            functions.add_to_tickers_file(values['ticker'])
         
         functions.api_call(ticker, values['start_date'], values['end_date'], timeframe)
         window['user_selection'].update(f"Ticker: {ticker} Date-Range: {values['start_date']} / {values['end_date']} Timeframe: {timeframe}")
