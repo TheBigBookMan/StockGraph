@@ -2,12 +2,6 @@ import PySimpleGUI as sg
 import os
 import functions
 
-# TODO add in a history section for previous selected stock tickers where adding in any searched tickers get added to the text file--- can just be a random txt file
-
-# TODO add in fcuntion to do todays date
-
-# TODO create a theme-- google: PySimleGUI themes-- go on geeksforgeeks website
-
 # TODO maybe add images to the buttons to make it look a bit better, search maybe with a magnifying glass
 # todo might need to change mouseover_color for the button change colour and a tooltip for extra info
 
@@ -78,16 +72,10 @@ window = sg.Window('StockGraph', layout=layout, size=(1200, 600))
 while True:
     event, values = window.read()
 
-    # TODO selection of favourite can then be used as ticker
-
-    # todo window['ticker'].update(value={return value from the function of selecting the historical one})-- this takes the value clicked in the history section and then adds it to the ticker input box ready to be used in search
-
     # todo sg.popup()--- use this for any errors eg- blank inputs, no api from wrong tiker etc
     # todo use above with try except problems
 
     #  TODO add in conditionals so user fills in correct information into the inputs
-    
-    
 
     if sg.WIN_CLOSED:
         break

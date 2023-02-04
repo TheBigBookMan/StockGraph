@@ -9,7 +9,9 @@
 
 import yfinance as yf
 
-
+# !!
+# !! RATHER THAN USE THE API, could use a web scraper like beautiful soup to download the csv file and then use a Pandas library to get the data and store it better into matplot lib---- good practice for web scraping and pandas
+# !!
 
 
 # ticker_chosen = input("Type in the ticker for the graph of stock price you would like to view, eg (MSFT= Microsoft, AAPL= Apple, TSLA= Tesla)")
