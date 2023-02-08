@@ -7,6 +7,8 @@ import functions
 
 # TODO link up with the functions from API call and then information is sent back
 
+# TODO add in a button to download the data to a folder or send an email of the graph to an email address???
+
 sg.theme("LightBlue2")
 
 # ? Might need to make a file for the tickers history-- for users who do not have the tickers.txt
@@ -34,10 +36,10 @@ end_date_today = sg.Button("Today's Date", key='today_date')
 
 # ? List of time periods
 period_title = sg.Text("Select timeframe: ")
+minutely_period = sg.Radio("Minutely", "TIMEFRAME", default=False, key="minutely")
 daily_period = sg.Radio("Daily", "TIMEFRAME", default=True, key="daily")
 weekly_period = sg.Radio("Weekly", "TIMEFRAME",  default=False, key="weekly")
 monthly_period = sg.Radio("Monthly", "TIMEFRAME", default=False, key="monthly")
-yearly_period = sg.Radio("Yearly", "TIMEFRAME", default=False, key="yearly")
 
 # ? Search button will connect to the function other file and call the API
 submit_button = sg.Button("Search", key='search_button')
@@ -62,7 +64,7 @@ layout = [
     [start_date, start_date_input, start_date_button, max_historical_date],
     [end_date, end_date_input, end_date_button, end_date_today],
     [period_title],
-    [daily_period, weekly_period, monthly_period, yearly_period],
+    [daily_period, weekly_period, monthly_period, minutely_period],
     [submit_button, exit_button, user_selection],
     [listbox]
     ],
@@ -88,13 +90,13 @@ while True:
         window['end_date'].update(value="max")
     elif event == 'search_button':
         if values['daily'] == True:
-            timeframe = 'daily'
+            timeframe = '1d'
         if values['weekly'] == True:
-            timeframe = 'weekly'
+            timeframe = '1wk'
         if values['monthly'] == True:
-            timeframe = 'monthly'
-        if values['yearly'] == True:
-            timeframe = 'yearly'
+            timeframe = '1mo'
+        if values['minutely'] == True:
+            timeframe = '1m'
 
         # TODO maybe have a try except for the api call and the except can have red text show up
 
