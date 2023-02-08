@@ -4,6 +4,7 @@
 #? marketcap, events, link to website, name, ticker, price, percent prices maybe
 
 #?  use this library for the graphs - https://plotly.com/python/financial-charts/
+# https://matplotlib.org/stable/gallery/showcase/stock_prices.html
 
 #  TODO ust the PySimpleGUI library to make an easy GUI for users to input data liuke ticket etc and then use Pandas etc to show the graph
 
@@ -18,15 +19,16 @@ import yfinance as yf
 # data = yf.Ticker(f"{ticker_chosen}")
 
 #!!!! TEMPORARY TESLA SO DONT HAV ETO INPUT EVERYTIME
-data = yf.Ticker("TSLA")
 
-data_history = data.history(start="2017-01-01", end="2017-04-30")
-data_calendar = data.calendar
-data_info = data.info
-data_news = data.news
+def call_api(ticker, start_date, end_date, timeframe):
+    data = yf.download(ticker, start_date, end_date, interval=timeframe)
+    print(data)
 
-# print(data.info)
-# print(data_history)
-# print(data_calendar)
-# print(data_news)
+    # data_history = data.history(start=start_date, end=end_date)
+    # data_info = data.info
+    # data_news = data.news
+
+    # print(data_info)
+    # print(data_history)
+    # print(data_news)
 
