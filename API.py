@@ -21,9 +21,6 @@ def call_api(ticker, start_date, end_date, timeframe):
 
     formatted_dates = [dt.datetime.strptime(d, '%Y-%m-%d').date() for d in dates]
 
-    print(formatted_dates)
-    # print(prices)
-
     graph = create_graph(formatted_dates, prices, ticker, start_date, end_date, timeframe)
 
 
@@ -41,7 +38,7 @@ def create_graph(dates, prices, ticker, start_date, end_date, timeframe):
 
     # ? Dynamically renders the Y axis dates according to data input
     # TODO need to make this dynamic to the timeframe selected by user-- 
-    plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+    plt.gca().xaxis.set_major_locator(mdates.AutoDateLocator())
 
     plt.plot(dates, prices, color='orange')
     plt.gcf().autofmt_xdate()
@@ -50,7 +47,7 @@ def create_graph(dates, prices, ticker, start_date, end_date, timeframe):
     plt.ylim([min_price_axis, max_price_axis])
     # plt.xlim([start_date, end_date])
 
-    plt.xlabel(timeframe)
+    plt.xlabel("Date-Range")
     plt.ylabel('Price')  
     plt.title(f"Ticker: {ticker} Date-Range: {start_date} / {end_date} Timeframe: {timeframe}")
     plt.show()

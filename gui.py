@@ -36,7 +36,7 @@ end_date_today = sg.Button("Today's Date", key='today_date')
 
 # ? List of time periods
 period_title = sg.Text("Select timeframe: ")
-minutely_period = sg.Radio("Minutely", "TIMEFRAME", default=False, key="minutely")
+period_description = sg.Text("This is for the amount of plots and detail on the graph.")
 daily_period = sg.Radio("Daily", "TIMEFRAME", default=True, key="daily")
 weekly_period = sg.Radio("Weekly", "TIMEFRAME",  default=False, key="weekly")
 monthly_period = sg.Radio("Monthly", "TIMEFRAME", default=False, key="monthly")
@@ -64,7 +64,8 @@ layout = [
     [start_date, start_date_input, start_date_button, max_historical_date],
     [end_date, end_date_input, end_date_button, end_date_today],
     [period_title],
-    [daily_period, weekly_period, monthly_period, minutely_period],
+    [period_description],
+    [daily_period, weekly_period, monthly_period],
     [submit_button, exit_button, user_selection],
     [listbox]
     ],
