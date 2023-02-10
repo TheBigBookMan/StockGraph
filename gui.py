@@ -80,7 +80,7 @@ while True:
 
     #  TODO add in conditionals so user fills in correct information into the inputs
 
-    if sg.WIN_CLOSED:
+    if event == sg.WIN_CLOSED:
         break
     elif event == 'exit_program':
         break
@@ -88,7 +88,8 @@ while True:
         window['end_date'].update(value=functions.get_current_time())
     elif event == "max_date":
         window['start_date'].update(value="max")
-        window['end_date'].update(value="max")
+        # window['end_date'].update(value="max")
+        start_date = 'max'
     elif event == 'search_button':
         if values['daily'] == True:
             timeframe = '1d'
@@ -96,8 +97,6 @@ while True:
             timeframe = '1wk'
         if values['monthly'] == True:
             timeframe = '1mo'
-        if values['minutely'] == True:
-            timeframe = '1m'
 
         # TODO maybe have a try except for the api call and the except can have red text show up
 
