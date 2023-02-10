@@ -93,19 +93,25 @@ while True:
     elif event == 'search_button':
         if values['daily'] == True:
             timeframe = '1d'
-        if values['weekly'] == True:
+        elif values['weekly'] == True:
             timeframe = '1wk'
-        if values['monthly'] == True:
+        elif values['monthly'] == True:
             timeframe = '1mo'
 
-        # TODO maybe have a try except for the api call and the except can have red text show up
 
         if values['list_box']:
             ticker = str(values['list_box'][0].strip('\n'))
         else:  
-            functions.add_to_tickers_file(values['ticker'])
+            ticker = values['ticker']
         
-        functions.api_call(ticker, values['start_date'], values['end_date'], timeframe)
-        window['user_selection'].update(f"Ticker: {ticker} Date-Range: {values['start_date']} / {values['end_date']} Timeframe: {timeframe}")
+
+        try:
+            functions.api_call(ticker, values['start_date'], values['end_date'], timeframe)
+            window['user_selection'].update(f"Ticker: {ticker} Date-Range: {values['start_date']} / {values['end_date']} Timeframe: {timeframe}")
+            functions.add_to_tickers_file(values['ticker'])
+
+        except ValueError:
+            sg.popup("That ticker didn't work, please try again...")
+
 
 window.close()

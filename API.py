@@ -8,8 +8,9 @@ import matplotlib.dates as mdates
 import datetime as dt
 
 def call_api(ticker, start_date, end_date, timeframe):
+    print(ticker)
     if start_date == 'max':
-        df = yf.download(tickers=ticker, end=end_date, interval=timeframe)
+        df = yf.download(ticker, end=end_date, interval=timeframe)
     else: 
         df = yf.download(ticker, start_date, end_date, interval=timeframe)
 
