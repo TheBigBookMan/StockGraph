@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import os
 import functions
 
@@ -57,6 +58,9 @@ with open('tickers.txt', 'r') as file:
 # ? Listbox functon for the list of the ticker history from a txt file that has the ticker history stored
 listbox = sg.Listbox(tickers, size=(10, 30), key="list_box")
 
+# ? Canvas layout for graph
+canvas = sg.Canvas(size=(400, 400), key="-CANVAS-")
+
 # ? Creating the layout structure of the GUI
 layout = [
     [title_info],
@@ -67,10 +71,11 @@ layout = [
     [period_description],
     [daily_period, weekly_period, monthly_period],
     [submit_button, exit_button, user_selection],
-    [listbox]
+    [listbox, canvas]
     ],
 
 window = sg.Window('StockGraph', layout=layout, size=(1200, 600))
+# * Maybe add in finalize=True, element_justification='center
 
 while True:
     event, values = window.read()
@@ -112,6 +117,17 @@ while True:
 
         except ValueError:
             sg.popup("That ticker didn't work, please try again...")
+
+# TODO this can go in th functions file
+def draw_figure(canvas, figure):
+    figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
+    figure_canvas_agg.draw()
+    figure_canvas_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
+    return figure_canvas_agg
+
+# TODO think this goes into the try block at the bottom
+draw_figure(window['-CANVAS-'].TKCanvas, GETAPICALLHERE)
+
 
 
 window.close()

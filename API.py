@@ -28,6 +28,7 @@ def call_api(ticker, start_date, end_date, timeframe):
     formatted_dates = [dt.datetime.strptime(d, '%Y-%m-%d').date() for d in dates]
 
     graph = create_graph(formatted_dates, prices, ticker, start_date, end_date, timeframe)
+    return graph
 
 
 
@@ -56,5 +57,6 @@ def create_graph(dates, prices, ticker, start_date, end_date, timeframe):
     plt.xlabel("Date-Range")
     plt.ylabel('Price')  
     plt.title(f"Ticker: {ticker} Date-Range: {start_date} / {end_date} Timeframe: {timeframe}")
-    plt.show()
+    # plt.show()
+    return plt.gcf()
     
