@@ -1,12 +1,8 @@
 import PySimpleGUI as sg
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import os
 import functions
-
-# TODO maybe add images to the buttons to make it look a bit better, search maybe with a magnifying glass
-# todo might need to change mouseover_color for the button change colour and a tooltip for extra info
-
-# TODO link up with the functions from API call and then information is sent back
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
 
 # TODO add in a button to download the data to a folder or send an email of the graph to an email address???
 
@@ -59,7 +55,7 @@ with open('tickers.txt', 'r') as file:
 listbox = sg.Listbox(tickers, size=(10, 30), key="list_box")
 
 # ? Canvas layout for graph
-canvas = sg.Canvas(size=(400, 400), key="-CANVAS-")
+canvas = sg.Canvas(size=(1000, 600), key="-CANVAS-")
 
 # ? Creating the layout structure of the GUI
 layout = [
@@ -74,16 +70,16 @@ layout = [
     [listbox, canvas]
     ],
 
-window = sg.Window('StockGraph', layout=layout, size=(1200, 600))
-# * Maybe add in finalize=True, element_justification='center
+window = sg.Window('StockGraph', layout=layout, size=(1200, 650), finalize=True, resizable=True)
+# * Maybe add in finalize=True
+
+fig, ax = plt.subplots()
+figure_canvas_agg = FigureCanvasTkAgg(fig, window['-CANVAS-'].TKCanvas)
+figure_canvas_agg.draw()
+figure_canvas_agg.get_tk_widget().pack(side='bottom', fill='both', expand=1)
 
 while True:
     event, values = window.read()
-
-    # todo sg.popup()--- use this for any errors eg- blank inputs, no api from wrong tiker etc
-    # todo use above with try except problems
-
-    #  TODO add in conditionals so user fills in correct information into the inputs
 
     if event == sg.WIN_CLOSED:
         break
@@ -93,7 +89,6 @@ while True:
         window['end_date'].update(value=functions.get_current_time())
     elif event == "max_date":
         window['start_date'].update(value="max")
-        # window['end_date'].update(value="max")
         start_date = 'max'
     elif event == 'search_button':
         if values['daily'] == True:
@@ -103,31 +98,23 @@ while True:
         elif values['monthly'] == True:
             timeframe = '1mo'
 
-
         if values['list_box']:
             ticker = str(values['list_box'][0].strip('\n'))
         else:  
             ticker = values['ticker']
         
-
         try:
-            functions.api_call(ticker, values['start_date'], values['end_date'], timeframe)
+            graph_data = functions.api_call(ticker, values['start_date'], values['end_date'], timeframe)
             window['user_selection'].update(f"Ticker: {ticker} Date-Range: {values['start_date']} / {values['end_date']} Timeframe: {timeframe}")
+            
+
+            # window['-CANVAS-'].TKCanvas.get_tk_widget.forget()
+            # TODO if statement for something with the window[canvas] that checks if there is an image in there and then if there is then it removes the pack 'canvas.get_tk_widget().pack_forget()'---- not cavnas though because aint working SOEMTHING--- then call draw figure
+            figure_canvas_agg.get_tk_widget().pack_forget()
+            figure_canvas_agg = functions.draw_figure(window['-CANVAS-'].TKCanvas, graph_data, figure_canvas_agg)
             functions.add_to_tickers_file(values['ticker'])
 
         except ValueError:
             sg.popup("That ticker didn't work, please try again...")
-
-# TODO this can go in th functions file
-def draw_figure(canvas, figure):
-    figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
-    figure_canvas_agg.draw()
-    figure_canvas_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
-    return figure_canvas_agg
-
-# TODO think this goes into the try block at the bottom
-draw_figure(window['-CANVAS-'].TKCanvas, GETAPICALLHERE)
-
-
 
 window.close()

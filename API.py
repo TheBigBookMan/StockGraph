@@ -8,15 +8,12 @@ import matplotlib.dates as mdates
 import datetime as dt
 
 def call_api(ticker, start_date, end_date, timeframe):
-    print(ticker)
     if start_date == 'max':
         df = yf.download(ticker, end=end_date, interval=timeframe)
     else: 
         df = yf.download(ticker, start_date, end_date, interval=timeframe)
 
-
     df = df.reset_index()
-
     dates = []
     prices = []
 
@@ -26,15 +23,13 @@ def call_api(ticker, start_date, end_date, timeframe):
         prices.append(row[1])
 
     formatted_dates = [dt.datetime.strptime(d, '%Y-%m-%d').date() for d in dates]
-
     graph = create_graph(formatted_dates, prices, ticker, start_date, end_date, timeframe)
     return graph
 
 
-
 def create_graph(dates, prices, ticker, start_date, end_date, timeframe):
-    # # ? this is the numbers plotting, first array is the X axis (date) second array is the Y axis (price)-- need to get an array of the dates for first, and Highs for second array
-    # # * can change style--- have a marker (marker='o', markersize=12)
+
+    plt.clf()
 
     # ? Makes the X axis more readable
     min_price_axis = min(prices) / 4
@@ -44,7 +39,6 @@ def create_graph(dates, prices, ticker, start_date, end_date, timeframe):
     plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m/%d/%Y'))
 
     # ? Dynamically renders the Y axis dates according to data input
-    # TODO need to make this dynamic to the timeframe selected by user-- 
     plt.gca().xaxis.set_major_locator(mdates.AutoDateLocator())
 
     plt.plot(dates, prices, color='orange')
