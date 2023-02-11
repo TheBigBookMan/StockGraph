@@ -1,12 +1,10 @@
-#?  use this library for the graphs - https://plotly.com/python/financial-charts/
-# https://matplotlib.org/stable/gallery/showcase/stock_prices.html
-
 import pandas as pd
 import yfinance as yf
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import datetime as dt
 
+# ? Convert the data from the API call into a format for graph plotting
 def call_api(ticker, start_date, end_date, timeframe):
     if start_date == 'max':
         df = yf.download(ticker, end=end_date, interval=timeframe)
@@ -26,9 +24,8 @@ def call_api(ticker, start_date, end_date, timeframe):
     graph = create_graph(formatted_dates, prices, ticker, start_date, end_date, timeframe)
     return graph
 
-
+# ? Plot the graph with the API information
 def create_graph(dates, prices, ticker, start_date, end_date, timeframe):
-
     plt.clf()
 
     # ? Makes the X axis more readable
@@ -46,11 +43,9 @@ def create_graph(dates, prices, ticker, start_date, end_date, timeframe):
 
     # # ? axis numbers, first two are X (date), last 2 are Y (price)
     plt.ylim([min_price_axis, max_price_axis])
-    # plt.xlim([start_date, end_date])
 
     plt.xlabel("Date-Range")
     plt.ylabel('Price')  
     plt.title(f"Ticker: {ticker} Date-Range: {start_date} / {end_date} Timeframe: {timeframe}")
-    # plt.show()
     return plt.gcf()
-    
+

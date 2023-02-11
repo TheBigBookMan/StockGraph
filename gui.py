@@ -71,7 +71,6 @@ layout = [
     ],
 
 window = sg.Window('StockGraph', layout=layout, size=(1200, 650), finalize=True, resizable=True)
-# * Maybe add in finalize=True
 
 fig, ax = plt.subplots()
 figure_canvas_agg = FigureCanvasTkAgg(fig, window['-CANVAS-'].TKCanvas)
@@ -107,9 +106,7 @@ while True:
             graph_data = functions.api_call(ticker, values['start_date'], values['end_date'], timeframe)
             window['user_selection'].update(f"Ticker: {ticker} Date-Range: {values['start_date']} / {values['end_date']} Timeframe: {timeframe}")
             
-
-            # window['-CANVAS-'].TKCanvas.get_tk_widget.forget()
-            # TODO if statement for something with the window[canvas] that checks if there is an image in there and then if there is then it removes the pack 'canvas.get_tk_widget().pack_forget()'---- not cavnas though because aint working SOEMTHING--- then call draw figure
+            
             figure_canvas_agg.get_tk_widget().pack_forget()
             figure_canvas_agg = functions.draw_figure(window['-CANVAS-'].TKCanvas, graph_data, figure_canvas_agg)
             functions.add_to_tickers_file(values['ticker'])
