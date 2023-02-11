@@ -13,7 +13,7 @@ if not os.path.exists('tickers.txt'):
     with open('tickers.txt', 'w') as file:
         pass
 
-title_info = sg.Text("Welcome to StockGraph! Input details below and then a graph will be shown for the stock you are tracking.")
+title_info = sg.Text("Welcome to StockGraph! Input details below and then a graph will be shown for the US stock you are tracking.")
 
 #  ? Get the users input for ticker
 ticker = sg.Text("Ticker: ")
@@ -109,6 +109,9 @@ while True:
             figure_canvas_agg.get_tk_widget().pack_forget()
             figure_canvas_agg = functions.draw_figure(window['-CANVAS-'].TKCanvas, graph_data, figure_canvas_agg)
             functions.add_to_tickers_file(values['ticker'])
+            with open('tickers.txt', 'r') as file:
+                tickers = file.readlines()
+                
             window['list_box'].update(tickers)
             window['ticker'].update('')
 

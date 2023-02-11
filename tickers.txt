@@ -1,3 +1,2 @@
-TSLA
 MSFT
-AAPL
+AMZN
