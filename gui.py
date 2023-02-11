@@ -97,19 +97,20 @@ while True:
         elif values['monthly'] == True:
             timeframe = '1mo'
 
-        if values['list_box']:
-            ticker = str(values['list_box'][0].strip('\n'))
-        else:  
+        if values['ticker']:
             ticker = values['ticker']
+        elif values['list_box']:
+            ticker = str(values['list_box'][0].strip('\n'))
         
         try:
             graph_data = functions.api_call(ticker, values['start_date'], values['end_date'], timeframe)
             window['user_selection'].update(f"Ticker: {ticker} Date-Range: {values['start_date']} / {values['end_date']} Timeframe: {timeframe}")
             
-            
             figure_canvas_agg.get_tk_widget().pack_forget()
             figure_canvas_agg = functions.draw_figure(window['-CANVAS-'].TKCanvas, graph_data, figure_canvas_agg)
             functions.add_to_tickers_file(values['ticker'])
+            window['list_box'].update(tickers)
+            window['ticker'].update('')
 
         except ValueError:
             sg.popup("That ticker didn't work, please try again...")
