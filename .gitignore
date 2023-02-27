@@ -1,1 +1,5 @@
 venv
+build
+dist
+gui.spec
+__pycache__

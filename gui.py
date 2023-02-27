@@ -4,11 +4,9 @@ import functions
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 
-# TODO add in a button to download the data to a folder or send an email of the graph to an email address???
-
 sg.theme("LightBlue2")
 
-# ? Might need to make a file for the tickers history-- for users who do not have the tickers.txt
+# ? Writes a file for the tickers history-- for users who do not have the tickers.txt
 if not os.path.exists('tickers.txt'):
     with open('tickers.txt', 'w') as file:
         pass
@@ -111,7 +109,7 @@ while True:
             functions.add_to_tickers_file(values['ticker'])
             with open('tickers.txt', 'r') as file:
                 tickers = file.readlines()
-                
+
             window['list_box'].update(tickers)
             window['ticker'].update('')
 
